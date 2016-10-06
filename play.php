@@ -24,19 +24,16 @@ if(!isset($_SESSION))
 			<!-- Login Bar -->
 			<?php include_once 'includes/layout/LoginDiv.php'; ?>
 
-
 			<?php
 				if (!empty($success)) {
 					echo $success;
 				}
 			?>
 
-
 			<?php if ($_SESSION['role'] == 'Admin' || $_SESSION['role'] == 'Manager' || $_SESSION['role'] == 'Player' ) : ?>
 
-
 			<!-- Main -->
-				<section class="wrapper style1 min-width="300px" width="30%" max-width="1000px">
+				<section class="wrapper style1" min-width="300px" width="30%" max-width="1000px">
 					<div class="container">
 							<div class="box post2">
 								<article>
@@ -120,7 +117,7 @@ if(!isset($_SESSION))
 			<?php else : ?>
 
 
-				<section class="wrapper style1 min-width="800px" width="30%" max-width="1000px">
+				<section class="wrapper style1" min-width="800px" width="30%" max-width="1000px">
 					<div class="container">
 						<header class="major">
 							<div class="box post2">
