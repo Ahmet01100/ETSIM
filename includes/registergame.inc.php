@@ -6,7 +6,10 @@
 */
 include_once 'db_connect.php';
 include_once 'functions.php';
-sec_session_start();
+if(!isset($_SESSION)) 
+{ 
+   sec_session_start();
+} 
  
 $error_msg = "";
 if ($_SESSION['role'] == "Admin" || $_SESSION['role'] == "Manager" ) {
