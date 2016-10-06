@@ -2,7 +2,10 @@
 include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
 include_once 'includes/lostpwd.php';
-sec_session_start();
+if(!isset($_SESSION)) 
+{ 
+   sec_session_start();
+} 
 echo $_SESSION['user_id'];
 if (!empty($_SESSION['user_id'])) {
 	$session = 1;

@@ -7,7 +7,10 @@
 include_once 'psl-config.php';
 include_once 'bidComputation.inc.php';
 include_once 'functions.php';
-sec_session_start();
+if(!isset($_SESSION)) 
+{ 
+   sec_session_start();
+}
 
 
 function get_result( $Statement ) {
@@ -25,15 +28,8 @@ function get_result( $Statement ) {
     return $RESULT;
 }
 
-
-
-
 $error_msg = "";
 if ($_SESSION['role'] == "Admin" || $_SESSION['role'] == "Manager" ) {
-
-
-
-
 
 	function createTableGame($mysqli) {
 		$tableSelectGame = "SELECT * FROM etsim_game";
@@ -41,7 +37,7 @@ if ($_SESSION['role'] == "Admin" || $_SESSION['role'] == "Manager" ) {
 		$stmttableSelectGame->execute();
 
 		#$resultstmttableSelectGame = $stmttableSelectGame->get_result();
-    $resultstmttableSelectGame = get_result($stmttableSelectGame);
+        $resultstmttableSelectGame = get_result($stmttableSelectGame);
 
 		#while($rowresultstmttableSelectGame = $resultstmttableSelectGame->fetch_assoc()) {
     while ( $rowresultstmttableSelectGame = array_shift( $resultstmttableSelectGame ) ) {
@@ -251,7 +247,7 @@ if ($_SESSION['role'] == "Admin" || $_SESSION['role'] == "Manager" ) {
 											AND cc.id_etsim_members = ? );";
 
 			if( $stmttableSelectGameNotRegister = $mysqli->prepare($tableSelectGameNotRegister) ) {
-                $stmttableSelectGameNotRegister->bind_param('s', $_SESSION[user_id]);
+                $stmttableSelectGameNotRegister->bind_param('s', $_SESSION['user_id']);
 				$stmttableSelectGameNotRegister->execute();
 				#$result_stmttableSelectGameNotRegister = $stmttableSelectGameNotRegister->get_result();
         $result_stmttableSelectGameNotRegister = get_result($stmttableSelectGameNotRegister);
@@ -310,7 +306,7 @@ if ($_SESSION['role'] == "Admin" || $_SESSION['role'] == "Manager" ) {
 
 		function createTableGameInGame($mysqli) {
 			#$tableSelectGameRegister = "	SELECT *
-      $tableSelectGameRegister = "	SELECT id_etsim_game, date_etsim_game, description_etsim_game
+            $tableSelectGameRegister = "	SELECT id_etsim_game, date_etsim_game, description_etsim_game
 											FROM etsim_game eg
 											INNER JOIN can_contains cc
 											ON cc.id_etsim_game = eg.id_etsim_game
@@ -321,29 +317,24 @@ if ($_SESSION['role'] == "Admin" || $_SESSION['role'] == "Manager" ) {
 											GROUP BY eg.id_etsim_game
 											ORDER BY eg.id_etsim_game";
 			if( $stmttableSelectGameRegister = $mysqli->prepare($tableSelectGameRegister) ) {
-                $stmttableSelectGameRegister->bind_param('s', $_SESSION[user_id]);
+                $stmttableSelectGameRegister->bind_param('s', $_SESSION['user_id']);
 				$stmttableSelectGameRegister->execute();
 				#$resultstmttableSelectGameRegister = $stmttableSelectGameRegister->get_result();
-        $stmttableSelectGameRegister->bind_result($id, $date, $description);
+                $stmttableSelectGameRegister->bind_result($id, $date, $description);
 
 				#while($rowresultstmttableSelectGameRegister = $resultstmttableSelectGameRegister->fetch_assoc()) {
-        while($stmttableSelectGameRegister->fetch()) {
-					#echo '<tr id="'.$rowresultstmttableSelectGameRegister['id_etsim_game'].'"><form action="inGame.php" method="post" class="enterInGame"><input type="hidden" name="goInGame" value="goInGame"/>';
-					#echo '<td><input disabled type="text" id="'.$rowresultstmttableSelectGameRegister['id_etsim_game'].'" class="id_etsim_game" value="'.$rowresultstmttableSelectGameRegister['id_etsim_game'].'"><input type="hidden" name="id_etsim_game" value="'.$rowresultstmttableSelectGameRegister['id_etsim_game'].'"></td>';
-					#echo '<td><input disabled type="text" id="'.$rowresultstmttableSelectGameRegister['id_etsim_game'].'" class="date_etsim_game" value="'.$rowresultstmttableSelectGameRegister['date_etsim_game'].'"><input type="hidden" name="date_etsim_game" value="'.$rowresultstmttableSelectGameRegister['date_etsim_game'].'"></td>';
-					#echo '<td><input disabled type="text" id="'.$rowresultstmttableSelectGameRegister['id_etsim_game'].'" class="description_etsim_game" value="'.$rowresultstmttableSelectGameRegister['description_etsim_game'].'"><input type="hidden" name="description_etsim_game" value="'.$rowresultstmttableSelectGameRegister['description_etsim_game'].'"></td>';
-					#echo '<td><input type="submit" name="register" id="'.$rowresultstmttableSelectGameRegister['id_etsim_game'].'" value="ENTER IN GAME" class="show_your_etsim_game" /></td></form>';
-					#echo '<td><button type="button" id="'.$rowresultstmttableSelectGameRegister['id_etsim_game'].'" class="leave_etsim_game">LEAVE GAME</button></td></tr>';
-          echo '<tr id="'.$id.'"><form action="inGame.php" method="post" class="enterInGame"><input type="hidden" name="goInGame" value="goInGame"/>';
-          echo '<td><input disabled type="text" id="'.$id.'" class="id_etsim_game" value="'.$id.'"><input type="hidden" name="id_etsim_game" value="'.$id.'"></td>';
-          echo '<td><input disabled type="text" id="'.$id.'" class="date_etsim_game" value="'.$date.'"><input type="hidden" name="date_etsim_game" value="'.$date.'"></td>';
-          echo '<td><input disabled type="text" id="'.$id.'" class="description_etsim_game" value="'.$description.'"><input type="hidden" name="description_etsim_game" value="'.$description.'"></td>';
-          echo '<td><input type="submit" name="register" id="'.$id.'" value="ENTER IN GAME" class="show_your_etsim_game" /></td></form>';
-          echo '<td><button type="button" id="'.$id.'" class="leave_etsim_game">LEAVE GAME</button></td></tr>';
+                while($stmttableSelectGameRegister->fetch()) {
+				
+                  echo '<tr id="'.$id.'"><form action="inGame.php" method="post" class="enterInGame"><input type="hidden" name="goInGame" value="goInGame"/>';
+                  echo '<td><input disabled type="text" id="'.$id.'" class="id_etsim_game" value="'.$id.'"><input type="hidden" name="id_etsim_game" value="'.$id.'"></td>';
+                  echo '<td><input disabled type="text" id="'.$id.'" class="date_etsim_game" value="'.$date.'"><input type="hidden" name="date_etsim_game" value="'.$date.'"></td>';
+                  echo '<td><input disabled type="text" id="'.$id.'" class="description_etsim_game" value="'.$description.'"><input type="hidden" name="description_etsim_game" value="'.$description.'"></td>';
+                  echo '<td><input type="submit" name="register" id="'.$id.'" value="ENTER IN GAME" class="show_your_etsim_game" /></td></form>';
+                  echo '<td><button type="button" id="'.$id.'" class="leave_etsim_game">LEAVE GAME</button></td></tr>';
 				}
-				#$resultstmttableSelectGameRegister->close();
+				
 			} else {
-				$error_msg .= " Error access etsime game ! ";
+				//$error_msg .= " Error access etsime game ! ";
             }
         }
 
@@ -364,7 +355,7 @@ if ($_SESSION['role'] == "Admin" || $_SESSION['role'] == "Manager" ) {
 											GROUP BY eg.id_etsim_game
 											ORDER BY eg.id_etsim_game";
 			if( $stmttableSelectCompletedGame = $mysqli->prepare($tableSelectCompletedGame) ) {
-                $stmttableSelectCompletedGame->bind_param('s', $_SESSION[user_id]);
+                $stmttableSelectCompletedGame->bind_param('s', $_SESSION['user_id']);
 				$stmttableSelectCompletedGame->execute();
 				#$resultstmttableSelectCompletedGame = $stmttableSelectCompletedGame->get_result();
         $stmttableSelectCompletedGame->bind_result($id, $date, $description);
@@ -382,15 +373,9 @@ if ($_SESSION['role'] == "Admin" || $_SESSION['role'] == "Manager" ) {
 				}
 				#$resultstmttableSelectCompletedGame->close();
 			} else {
-				$error_msg .= " Error access etsime game ! ";
+				//$error_msg .= " Error access etsime game ! ";
             }
         }
-
-
-
-
-
-
 		function showtimeround($mysqli, $idGame, $idRound) {
 			if ($SelectLimitDatetimeRound = $mysqli->prepare("SELECT datetime_round_etsim_game_round_datetime FROM etsim_game_round_datetime WHERE id_etsim_game = ? AND round_number_etsim_game_round_datetime = ?;")) {
 				$SelectLimitDatetimeRound->bind_param('ss', $idGame, $idRound);  // Lie "$email" aux paramètres.
@@ -467,7 +452,7 @@ if ($_SESSION['role'] == "Admin" || $_SESSION['role'] == "Manager" ) {
 
 		function statusCurrentRoundGame($mysqli, $idGame, $idRound) {
 			if ($SelectcountUserInGameFinnishRound = $mysqli->prepare("SELECT finnish_etsim_round_game_temp FROM etsim_round_game_temp WHERE idetsimgame_etsim_round_game_temp = ? AND number_etsim_round_game_temp = ? AND idetsimmember_etsim_round_game_temp = ? GROUP BY finnish_etsim_round_game_temp ORDER BY number_etsim_round_game_temp")) {
-				$SelectcountUserInGameFinnishRound->bind_param('sss', $idGame, $idRound, $_SESSION[user_id]);
+				$SelectcountUserInGameFinnishRound->bind_param('sss', $idGame, $idRound, $_SESSION['user_id']);
 				$SelectcountUserInGameFinnishRound->execute();
 				$SelectcountUserInGameFinnishRound->store_result();
 				$SelectcountUserInGameFinnishRound->bind_result($statusRoundForUser);

@@ -7,7 +7,10 @@
 	include_once 'includes/functions.php';
 	include_once 'includes/functions_game.php';
 	include_once 'includes/registerplant.inc.php';
-	sec_session_start();
+	if(!isset($_SESSION)) 
+    { 
+       sec_session_start();
+    } 
 	
 	if (!empty($error_msg)) {
 		echo $error_msg;

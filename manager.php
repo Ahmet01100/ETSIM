@@ -3,7 +3,10 @@ include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
 include_once 'includes/functions_game.php';
 include_once 'includes/registergame.inc.php';
-sec_session_start();
+if(!isset($_SESSION)) 
+{ 
+   sec_session_start();
+} 
 ?>
 
 <!DOCTYPE HTML>
@@ -28,10 +31,10 @@ sec_session_start();
 
 
 			<?php if ($_SESSION['role'] == 'Admin' || $_SESSION['role'] == 'Manager' ) : ?>
-
+            
 
 			<!-- Main -->
-				<section class="wrapper style1 min-width="800px" width="30%" max-width="1000px">
+				<section class="wrapper style1" min-width="800px" width="30%" max-width="1000px">
 					<div class="container">
 							<div class="box post2">
 								<article>
@@ -89,7 +92,7 @@ sec_session_start();
 
 
 
-				<section class="wrapper style1 min-width="800px" width="30%" max-width="1000px">
+				<section class="wrapper style1" min-width="800px" width="30%" max-width="1000px">
 					<div class="container">
 						<div class="box post">
 							<article>
@@ -118,7 +121,7 @@ sec_session_start();
 				</section>
 
 
-				<section class="wrapper style1 min-width="800px" width="30%" max-width="1000px">
+				<section class="wrapper style1" min-width="800px" width="30%" max-width="1000px">
 					<div class="container">
 							<div class="box post2">
 								<article>
@@ -191,7 +194,7 @@ sec_session_start();
 				</section>
 
 
-				<section class="wrapper style1 min-width="800px" width="30%" max-width="1000px">
+				<section class="wrapper style1" min-width="800px" width="30%" max-width="1000px">
 					<div class="container">
 							<div class="box post2">
 								<article>
@@ -258,7 +261,7 @@ sec_session_start();
 			<?php else : ?>
 
 
-				<section class="wrapper style1 min-width="800px" width="30%" max-width="1000px">
+				<section class="wrapper style1" min-width="800px" width="30%" max-width="1000px">
 					<div class="container">
 						<header class="major">
 							<div class="box post2">

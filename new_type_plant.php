@@ -6,7 +6,10 @@
 	include_once 'includes/db_connect.php';
 	include_once 'includes/functions.php';
 	include_once 'includes/registertypeplant.inc.php';
-	sec_session_start();
+	if(!isset($_SESSION)) 
+    { 
+       sec_session_start();
+    } 
 	
 	if (!empty($error_msg)) {
 		echo $error_msg;

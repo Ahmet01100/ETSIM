@@ -9,7 +9,10 @@ include_once 'includes/functions_game.php';
 include_once 'includes/inGame.inc.php';
 include_once 'includes/registerRoundGame.inc.php';
 
-sec_session_start();
+if(!isset($_SESSION)) 
+{ 
+   sec_session_start();
+} 
  
 ?>
 <!DOCTYPE HTML>
